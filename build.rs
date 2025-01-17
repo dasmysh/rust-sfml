@@ -141,9 +141,9 @@ fn main() {
         .define("CMAKE_FIND_DEBUG_MODE", "TRUE") // I think I'll leave this on for now. Useful for debugging.
         .define("BUILD_SHARED_LIBS", "FALSE")
         .define("SFML_BUILD_NETWORK", "FALSE")
-        .define("SFML_INSTALL_PKGCONFIG_FILES", "FALSE")
+        .define("SFML_INSTALL_PKGCONFIG_FILES", "FALSE");
         // Disable "install" step
-        .no_build_target(true);
+        // .no_build_target(true);
     if !feat_audio {
         cmake.define("SFML_BUILD_AUDIO", "FALSE");
     } else {
@@ -193,7 +193,9 @@ fn main() {
         .define("CSFML_GRAPHICS_EXPORTS", None)
         .define("SFML_STATIC", None)
         .include("CSFML/src/")
-        .include("SFML/include");
+        .include(format!("{}/include", cmake_build_path.display()));
+    eprintln!("include: {}/include", cmake_build_path.display());
+    // panic!("{}/include", cmake_build_path.display());
     build.files(
         [
             "CSFML/src/System/Clock.cpp",
